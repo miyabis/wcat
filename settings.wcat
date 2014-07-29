@@ -1,0 +1,138 @@
+settings
+{
+    //--------------------------------------------------------------------------
+    // General controller settings
+    //
+    //  clientfile     - specifies the client file, relative to working dir
+    //  server         - host name of the webserver
+    //  virtualclients - number of 'threads' per physical client
+    //  clients        - number of physical webcat client machines
+    //
+    //--------------------------------------------------------------------------
+    // Example:
+    //
+    //  clientfile     = "ubr\lcw2.light.ubr";
+    clients        = 5;
+    virtualclients = 5;
+    //   
+    //--------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------
+    // Performance counters (pass '-x' option to wcctl.exe to enable)
+    //
+    //  interval        - polling interval in seconds (default=10)
+    //  host            - host name of machine to monitor (default=webserver)
+    //  counter         - path of counter to monitor
+    //
+    //--------------------------------------------------------------------------
+    // Optional:
+    //
+    //   Additional machines can be monitored by adding more counters blocks.
+    //
+    // Example:
+    //
+    //   counters {
+    //       host = "sqlserver";   // name of remote machine
+    //       interval = 5;
+    //       counter = "...";
+    //   }
+    //
+    //--------------------------------------------------------------------------
+
+    counters
+    {
+	host = "www server";   // name of remote machine
+        interval = 5;
+
+        counter = "Processor(_Total)\\% Processor Time";
+        counter = "Processor(_Total)\\% Privileged Time";
+        counter = "Processor(_Total)\\% User Time";
+        counter = "Processor(_Total)\\Interrupts/sec";
+
+        counter = "Memory\\Available KBytes";
+
+        counter = "Process(w3wp)\\Working Set";
+
+        counter = "System\\Context Switches/sec";
+        counter = "System\\System Calls/sec";
+
+        counter = "Web Service(_Total)\\Bytes Received/sec" ; 
+        counter = "Web Service(_Total)\\Bytes Sent/sec" ; 
+        counter = "Web Service(_Total)\\Connection Attempts/sec" ; 
+        counter = "Web Service(_Total)\\Get Requests/sec" ; 
+
+	// .NET メモリ消費を計測
+        counter = "Process(w3wp)\\Private Bytes" ;
+        counter = ".NET CLR Memory(w3wp)\\% Time in GC" ;
+        counter = ".NET CLR Memory(w3wp)\\# Bytes in all Heaps" ; 
+        counter = ".NET CLR Memory(w3wp)\\# Gen 0 Collections" ; 
+        counter = ".NET CLR Memory(w3wp)\\# Gen 1 Collections" ; 
+        counter = ".NET CLR Memory(w3wp)\\# Gen 2 Collections" ; 
+        counter = ".NET CLR Memory(w3wp)\\# of Pinned Objects" ; 
+        counter = ".NET CLR Memory(w3wp)\\Large Object Heap Size" ; 
+    }
+
+    counters
+    {
+	host = "db server";   // name of remote machine
+        interval = 5;
+
+        counter = "Processor(_Total)\\% Processor Time";
+        counter = "Processor(_Total)\\% Privileged Time";
+        counter = "Processor(_Total)\\% User Time";
+        counter = "Processor(_Total)\\Interrupts/sec";
+
+        counter = "Memory\\Available KBytes";
+
+        counter = "System\\Context Switches/sec";
+        counter = "System\\System Calls/sec";
+
+	// SQLServerを計測
+        counter = "SQLServer:General Statistics\\User Connections";			// 接続中ログインユーザー数
+        counter = "SQLServer:General Statistics\\Logins/sec";				// 1秒あたりのログインユーザー数
+        counter = "SQLServer:Databases(x4l)\\Active Transactions";			// 実行中のトランザクション数
+        counter = "SQLServer:Databases(x4l)\\Transactions/sec";				// 1秒あたりの実行トランザクション数
+        counter = "SQLServer:Access Methods\\Table Lock Escalations/sec";	// 1秒あたりのロックエスカレーション数
+        counter = "SQLServer:Memory Manager\\Total Server Memory (KB)";		// サーバーが使用している動的メモリ総量
+        counter = "SQLServer:Memory Manager\\Connection Memory (KB)";		// ユーザー接続用に使用しているメモリ量
+        counter = "SQLServer:Memory Manager\\Lock Memory (KB)";				// ロックに使用しているメモリ量
+    }
+
+    //--------------------------------------------------------------------------
+    // Registry Key Monitors (pass '-x' option to wcctl.exe to enable)
+    //
+    //  path - registry path, relative to HKLM
+    //  name - name of registry key
+    //  type - type of value (REG_SZ | REG_DWORD)
+    //
+    //--------------------------------------------------------------------------
+    // Optional:
+    //
+    //   Additional registry keys can be monitored on the web server by
+    //   adding more registry blocks to this file.  Note that simple strings and
+    //   dwords are all that webcat currently supports.
+    //
+    // Example:
+    //
+    //   registry {
+    //     path = "System\\CurrentControlSet\\Services\\Tcpip\\Parameters";
+    //     name = "DhcpDomain";
+    //     type = REG_SZ;
+    //   }
+    //
+    //--------------------------------------------------------------------------
+
+    // registry
+    // {
+    //     path = "System\\CurrentControlSet\\Control\\FileSystem";
+    //     name = "NtfsDisableLastAccessUpdate";
+    //     type = REG_DWORD;
+    // }
+
+    // registry
+    // {
+    //     path = "System\\CurrentControlSet\\Services\\Tcpip\\Parameters";
+    //     name = "SynAttackProtect";
+    //     type = REG_DWORD;
+    // }
+}
